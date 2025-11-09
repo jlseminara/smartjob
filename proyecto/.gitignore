@@ -1,16 +1,9 @@
-HELP.md
+READ.md
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
-
-### OpenAPI generated sources ###
-/src/main/java/com/smartjob/usersbackend/adapter/in/web/interfaces/
-/src/main/java/com/smartjob/usersbackend/adapter/in/web/models/
-
-!**/src/main/java/com/smartjob/usersbackend/adapter/in/web/interfaces/**
-!**/src/main/java/com/smartjob/usersbackend/adapter/in/web/models/**
 
 ### STS ###
 .apt_generated
@@ -42,11 +35,3 @@ out/
 
 ### VS Code ###
 .vscode/
-
-### Artifacts ###
-docker/*.jar
-
-### Logs ###
-log/
-logs/
-*.log
