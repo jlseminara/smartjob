@@ -1,0 +1,43 @@
+openapi: 3.0.3
+info:
+  title: Users Backend API endpoints
+  description: OpenAPI spec endpoints for Users
+  version: 1.0.0
+
+paths:
+  /v1/users:
+    post:
+      summary: Add new user
+      description: Add new user if email does not exist and returns creation details
+      tags:
+        - Users
+      operationId: addUser
+      parameters:
+      requestBody:
+        description: AddUserPayload component representing details of user and telephones collection
+        required: true
+        content:
+          application/json:
+            schema:
+              nullable: false
+              $ref: 'models.yml#/components/schemas/AddUserPayload'
+      responses:
+        201:
+          description: Project List
+          content:
+            application/json:
+              schema:
+                $ref: 'models.yml#/components/schemas/CreatedUserDTO'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: 'models.yml#/components/schemas/ErrorResponse'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: 'models.yml#/components/schemas/ErrorResponse'
+

@@ -1,0 +1,183 @@
+import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
+
+plugins {
+	id 'java'
+    id 'jacoco'
+    id 'checkstyle'
+	id 'org.springframework.boot' version '3.5.7'
+	id 'io.spring.dependency-management' version '1.1.7'
+    id 'org.springdoc.openapi-gradle-plugin' version '1.9.0'
+    id 'org.openapi.generator' version '7.7.0'
+    id 'org.flywaydb.flyway' version '10.15.0'
+}
+
+group = 'com.smartjob'
+version = '0.1'
+description = 'Users Backend'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.5'
+    implementation 'org.springframework.security:spring-security-crypto:6.5.6'
+
+    compileOnly 'org.projectlombok:lombok'
+    implementation 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    runtimeOnly 'com.h2database:h2'
+    implementation 'org.flywaydb:flyway-core'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+    implementation 'org.mapstruct:mapstruct:1.6.3'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
+    implementation 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+    annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+    testImplementation 'org.assertj:assertj-core:3.27.3'
+    implementation 'ch.qos.logback:logback-classic'
+    implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.8.14'
+    implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
+    implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+    implementation group: 'org.openapitools', name: 'jackson-databind-nullable', version: '0.2.6'
+    implementation group: 'javax.annotation', name: 'javax.annotation-api', version: '1.3.2'
+    implementation group: 'jakarta.validation', name: 'jakarta.validation-api', version: '3.1.1'
+    compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.withType(Test) {
+    finalizedBy jacocoTestReport
+}
+
+checkstyle {
+    toolVersion = '10.21.4'
+    configFile = file("${project.rootDir}/config/checkstyle/checkstyle.xml")
+    ignoreFailures = true
+}
+
+checkstyleMain {
+    source = fileTree('src/main/java') {
+        exclude { fileTreeElement ->
+            if (fileTreeElement.file.name.endsWith('.java')) {
+                return fileTreeElement.file.text.contains('@Generated')
+            }
+            return false
+        }
+    }
+}
+
+tasks.withType(Checkstyle).configureEach {
+    reports {
+        xml.required = false
+        html.required = true
+    }
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+test {
+    jvmArgs "-javaagent:${configurations.testRuntimeClasspath.find { it.name.contains('mockito-core') }.absolutePath}"
+    forkEvery = 1
+}
+
+
+jacocoTestReport {
+    dependsOn test
+
+    reports {
+        xml.required = true
+    }
+}
+
+openApiGenerate {
+    generatorName.set("spring")
+    library = 'spring-boot'
+    generateAliasAsModel = true
+    generateApiDocumentation = true
+    generateApiTests = false
+    generateModelTests = false
+
+    globalProperties = [
+            "openApiNullable"                  : "true",
+            "interfaceOnly"                    : "false",
+            "useTags"                          : "true",
+            "useSpringfox"                     : "true",
+            "performBeanValidation"            : "false",
+            "useOptional"                      : "false",
+            "sortModelPropertiesByRequiredFlag": "true",
+            "sortParamsByRequiredFlag"         : "true",
+            "supportingFiles"        		   : "false",
+            "useSpringController"              : "true",
+            "delegatePattern"                  : "true",
+            "useBeanValidation"                : "true"
+    ]
+    additionalProperties = [
+            exceptionHandler: "true",
+    ]
+
+    tasks.register('InterfacesGenerator', GenerateTask) {
+
+        inputSpecRootDirectory = "$projectDir/src/main/resources/openapi-specs/"
+        outputDir = "$projectDir/build/generated/openapi/"
+
+        generatorName.set("spring")
+        library = 'spring-boot'
+        generateAliasAsModel = true
+        generateApiDocumentation = true
+        generateApiTests = false
+        modelPackage.set('com.smartjob.usersbackend.adapter.in.web.models')
+        apiPackage.set('com.smartjob.usersbackend.adapter.in.web.interfaces')
+        configOptions.set([
+                documentationProvider:      "none",
+                skipDefaultInterface:       "true",
+                interfaceOnly       :       "true",
+                useTags             :       "true",
+                enumPropertyNaming  :       "original",
+                serializableModel   :       "true",
+                hideGenerationTimestamp:    "true",
+                useBeanValidation:          "true",
+                performBeanValidation:      "true",
+                openApiNullable:            "false",
+                beanValidationOnGetters:    "false",
+                jacksonAnnotations:         "true",
+                useSpringBoot3:             "true",
+                delegatePattern:            "false",
+                additionalModelTypeAnnotations: "@javax.validation.Valid"
+        ])
+
+        typeMappings.set([
+                DateTime: "LocalDateTime",
+                Date: "Date"
+        ])
+
+        importMappings.set([
+                LocalDateTime: "java.time.LocalDateTime",
+                Date: "java.util.Date"
+        ])
+
+        doLast{
+            copy {
+                from "$projectDir/build/generated/openapi/src/main/java/com/smartjob/usersbackend/adapter/in/web"
+                into "$projectDir/src/main/java/com/smartjob/usersbackend/adapter/in/web"
+                include '**/*'
+            }
+        }
+    }
+}
+
+tasks.compileJava.dependsOn(["InterfacesGenerator"])

@@ -1,0 +1,76 @@
+openapi: 3.0.3
+info:
+  title: Users Backend
+  description: OpenAPI spec for Users Backend Service.
+  version: 1.0.0
+
+paths: { }
+
+components:
+
+  schemas:
+
+    TelephoneDTO:
+      type: object
+      required: [number, cityCode, countryCode]
+      properties:
+        number:
+          type: string
+          x-field-extra-annotation: '@NotNull'
+        cityCode:
+          type: string
+          x-field-extra-annotation: '@NotNull'
+        countryCode:
+          type: string
+          x-field-extra-annotation: '@NotNull'
+
+    AddUserPayload:
+      type: object
+      required: [name, email, password, phones]
+      properties:
+        name:
+          type: string
+          x-field-extra-annotation: '@NotNull'
+        email:
+          type: string
+          format: email
+          x-field-extra-annotation: '@NotNull'
+        password:
+          type: string
+          x-field-extra-annotation: '@NotNull'
+        phones:
+          type: array
+          x-field-extra-annotation: '@NotNull'
+          items:
+            $ref: '#/components/schemas/TelephoneDTO'
+
+    CreatedUserDTO:
+      type: object
+      properties:
+        id:
+          type: string
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+        lastLogin:
+          type: string
+          format: date-time
+        token:
+          type: string
+        isActive:
+          type: boolean
+
+    ErrorResponse:
+      type: object
+      properties:
+        titulo:
+          type: string
+        status:
+          type: integer
+          format: int32
+        mensaje:
+          type: string
+
