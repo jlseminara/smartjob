@@ -152,7 +152,7 @@ public class UsersControllerTests {
         mockMvc.perform(MockMvcRequestBuilders.post("/v1/users")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBodyOK))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                .andExpect(MockMvcResultMatchers.status().isCreated());
     }
 
 }
