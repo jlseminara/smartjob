@@ -15,7 +15,6 @@ paths:
       parameters:
       requestBody:
         description: AddUserPayload component representing details of user and telephones collection
-        required: true
         content:
           application/json:
             schema:

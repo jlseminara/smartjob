@@ -16,13 +16,10 @@ components:
       properties:
         number:
           type: string
-          x-field-extra-annotation: '@NotNull'
         cityCode:
           type: string
-          x-field-extra-annotation: '@NotNull'
         countryCode:
           type: string
-          x-field-extra-annotation: '@NotNull'
 
     AddUserPayload:
       type: object
@@ -30,17 +27,12 @@ components:
       properties:
         name:
           type: string
-          x-field-extra-annotation: '@NotNull'
         email:
           type: string
-          format: email
-          x-field-extra-annotation: '@NotNull'
         password:
           type: string
-          x-field-extra-annotation: '@NotNull'
         phones:
           type: array
-          x-field-extra-annotation: '@NotNull'
           items:
             $ref: '#/components/schemas/TelephoneDTO'
 
@@ -66,11 +58,6 @@ components:
     ErrorResponse:
       type: object
       properties:
-        titulo:
-          type: string
-        status:
-          type: integer
-          format: int32
         mensaje:
           type: string
 

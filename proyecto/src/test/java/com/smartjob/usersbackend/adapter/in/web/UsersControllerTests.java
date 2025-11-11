@@ -76,10 +76,10 @@ public class UsersControllerTests {
 
     @Test
     @SneakyThrows
-    @DisplayName("Add user without body returns UnsupportedMediaType Exception")
+    @DisplayName("Add user without body returns bad request exception")
     void noBodyReturnsUnsupportedMediaTypeException() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/v1/users"))
-                .andExpect(MockMvcResultMatchers.status().isUnsupportedMediaType());
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 
     @Test
@@ -96,10 +96,19 @@ public class UsersControllerTests {
     @SneakyThrows
     @DisplayName("Add user with invalid email returns BadRequest Exception")
     void invalidEmailReturnsBadRequestException() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/v1/users")
+        String errorMessage = "ASD123";
+
+        when(addUserUsecase.addUser(any(User.class))).thenThrow(new DataFormatErrorException(errorMessage));
+
+        var result = mockMvc.perform(MockMvcRequestBuilders.post("/v1/users")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBodyWrongMail))
-                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+                .andExpect(MockMvcResultMatchers.status().isBadRequest()).andReturn();
+
+        String responseBody = result.getResponse().getContentAsString();
+        ErrorResponse response = objectMapper.readValue(responseBody, ErrorResponse.class);
+
+        assertThat(response.getMensaje()).isEqualTo(errorMessage);
     }
 
     @Test

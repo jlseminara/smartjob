@@ -12,8 +12,10 @@ Fecha: 8 de Noviembre de 2025
 
 # Caracteristicas
 
+* Existen dos diagramas UML de clase perteneciente a las dos clases con mas funcionalida en el /diagramas
 * Base de datos H2
 * Creacion de esquemas de datos automatico con Flyway
+* Los script de creacion de esquema de db se encuentran en directorio estandar de flyway (/resources/deb/migration)
 * Implementacion anemica de DDD en paquete CORE
 * Implementacion de arquitectura haxagonal
 * Generacion automatica de interfaces restcontroller con OpenAPI generator
@@ -22,6 +24,10 @@ Fecha: 8 de Noviembre de 2025
 * Mapeos automaticos con MapStruct
 * Password no almacenado, se almacena salt&pepper con bcrypt (OWASP)
 
+
+# Diagramas
+
+* Existen dos diagramas UML de clase perteneciente a las dos clases con mas funcionalida en el /diagramas
 
 # Instrucciones
 

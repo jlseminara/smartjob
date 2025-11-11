@@ -24,49 +24,7 @@ public class ErrorResponse implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  private String titulo;
-
-  private Integer status;
-
   private String mensaje;
-
-  public ErrorResponse titulo(String titulo) {
-    this.titulo = titulo;
-    return this;
-  }
-
-  /**
-   * Get titulo
-   * @return titulo
-   */
-  
-  @JsonProperty("titulo")
-  public String getTitulo() {
-    return titulo;
-  }
-
-  public void setTitulo(String titulo) {
-    this.titulo = titulo;
-  }
-
-  public ErrorResponse status(Integer status) {
-    this.status = status;
-    return this;
-  }
-
-  /**
-   * Get status
-   * @return status
-   */
-  
-  @JsonProperty("status")
-  public Integer getStatus() {
-    return status;
-  }
-
-  public void setStatus(Integer status) {
-    this.status = status;
-  }
 
   public ErrorResponse mensaje(String mensaje) {
     this.mensaje = mensaje;
@@ -96,22 +54,18 @@ public class ErrorResponse implements Serializable {
       return false;
     }
     ErrorResponse errorResponse = (ErrorResponse) o;
-    return Objects.equals(this.titulo, errorResponse.titulo) &&
-        Objects.equals(this.status, errorResponse.status) &&
-        Objects.equals(this.mensaje, errorResponse.mensaje);
+    return Objects.equals(this.mensaje, errorResponse.mensaje);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(titulo, status, mensaje);
+    return Objects.hash(mensaje);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class ErrorResponse {\n");
-    sb.append("    titulo: ").append(toIndentedString(titulo)).append("\n");
-    sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    mensaje: ").append(toIndentedString(mensaje)).append("\n");
     sb.append("}");
     return sb.toString();

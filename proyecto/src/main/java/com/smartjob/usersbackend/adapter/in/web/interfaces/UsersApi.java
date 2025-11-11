@@ -31,7 +31,7 @@ public interface UsersApi {
      * POST /v1/users : Add new user
      * Add new user if email does not exist and returns creation details
      *
-     * @param addUserPayload AddUserPayload component representing details of user and telephones collection (required)
+     * @param addUserPayload AddUserPayload component representing details of user and telephones collection (optional)
      * @return Project List (status code 201)
      *         or Bad request (status code 400)
      *         or Internal Server Error (status code 500)
@@ -44,7 +44,7 @@ public interface UsersApi {
     )
     
     ResponseEntity<CreatedUserDTO> addUser(
-         @Valid @RequestBody AddUserPayload addUserPayload
+         @Valid @RequestBody(required = false) AddUserPayload addUserPayload
     );
 
 }

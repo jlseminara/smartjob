@@ -28,16 +28,12 @@ public class AddUserPayload implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  @NotNull
   private String name;
 
-  @NotNull
   private String email;
 
-  @NotNull
   private String password;
 
-  @NotNull
   @Valid
   private List<@Valid TelephoneDTO> phones = new ArrayList<>();
 
@@ -83,7 +79,7 @@ public class AddUserPayload implements Serializable {
    * Get email
    * @return email
    */
-  @NotNull @jakarta.validation.constraints.Email 
+  @NotNull 
   @JsonProperty("email")
   public String getEmail() {
     return email;

@@ -4,6 +4,7 @@ import com.smartjob.usersbackend.core.model.User;
 import com.smartjob.usersbackend.core.port.out.persistence.UsersRepository;
 import com.smartjob.usersbackend.exceptions.DataCreationException;
 import com.smartjob.usersbackend.exceptions.DataFormatErrorException;
+import com.smartjob.usersbackend.exceptions.DataIntegrityException;
 import com.smartjob.usersbackend.utilities.validators.PasswordFormatValidator;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.DisplayName;
@@ -93,7 +94,7 @@ public class AddUserUsecaseImplTests {
                 addUserUsecase.addUser(mockUser));
 
         assertThat(expectedException).isNotNull();
-        assertThat(expectedException).isInstanceOf(DataCreationException.class);
+        assertThat(expectedException).isInstanceOf(DataIntegrityException.class);
     }
 
     @Test

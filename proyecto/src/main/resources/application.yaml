@@ -4,4 +4,3 @@ spring:
     active: dev
   config:
     import: optional:classpath:profiles/
-

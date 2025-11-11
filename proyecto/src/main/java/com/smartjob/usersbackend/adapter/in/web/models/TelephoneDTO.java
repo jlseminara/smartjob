@@ -24,13 +24,10 @@ public class TelephoneDTO implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  @NotNull
   private String number;
 
-  @NotNull
   private String cityCode;
 
-  @NotNull
   private String countryCode;
 
   public TelephoneDTO() {

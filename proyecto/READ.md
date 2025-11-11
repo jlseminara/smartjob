@@ -12,16 +12,22 @@ Fecha: 8 de Noviembre de 2025
 
 # Caracteristicas
 
+* Existen dos diagramas UML de clase perteneciente a las dos clases con mas funcionalida en el /diagramas
 * Base de datos H2
 * Creacion de esquemas de datos automatico con Flyway
+* Los script de creacion de esquema de db se encuentran en directorio estandar de flyway (/resources/deb/migration)
 * Implementacion anemica de DDD en paquete CORE
 * Implementacion de arquitectura haxagonal
 * Generacion automatica de interfaces restcontroller con OpenAPI generator
-  * Las interfaces de los restcontroller estan en adapter en lugar de core.port para evitar tener referencia al framework en core 
+    * Las interfaces de los restcontroller estan en adapter en lugar de core.port para evitar tener referencia al framework en core
 * Swagger
 * Mapeos automaticos con MapStruct
 * Password no almacenado, se almacena salt&pepper con bcrypt (OWASP)
 
+
+# Diagramas
+
+* Existen dos diagramas UML de clase perteneciente a las dos clases con mas funcionalida en el /diagramas
 
 # Instrucciones
 
@@ -31,7 +37,7 @@ Fecha: 8 de Noviembre de 2025
 * H2 Manager: http://localhost:8080/h2-console/
 * Swagger: http://localhost:8080/swagger-ui/index.html
 * Endpoint alta usuario: POST <host>t:8080/v1/users
-  * Codigos de retorno: 201 (created), 400 (bad request), 405 (method not allowed), 500 (internal error)
+    * Codigos de retorno: 201 (created), 400 (bad request), 405 (method not allowed), 500 (internal error)
 
 * Ejemplo de request:
     ~~~
